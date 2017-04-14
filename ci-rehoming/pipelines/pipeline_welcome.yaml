@@ -1,0 +1,14 @@
+---
+resources:
+- name: ci-concourse
+  type: git
+  source:
+    uri: https://github.com/pepito987/ci-concourse.git
+
+jobs:
+- name: job-welcome
+  public: true
+  plan:
+  - get: ci-concourse
+  - task: say-hello
+    file: ci-concourse/ci-rehoming/tasks/task_hello.yaml
