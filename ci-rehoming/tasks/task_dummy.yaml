@@ -11,4 +11,4 @@ inputs:
   path: playbooks
 
 run:
-  path: ./ci-concourse/ci-rehoming/scripts/say_something.sh
+  path: ./ci-concourse/ci-rehoming/scripts/run_ansible.sh

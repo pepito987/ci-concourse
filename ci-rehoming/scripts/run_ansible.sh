@@ -1,7 +1,6 @@
 #!/bin/sh
 
-echo "Say Something"
-ls -R
+echo "run ansible"
 cd playbooks
 ansible-playbook playbooks/hello_world.yaml
 

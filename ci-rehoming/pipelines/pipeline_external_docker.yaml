@@ -1,0 +1,21 @@
+---
+resources:
+- name: ci-concourse
+  type: git
+  source:
+    uri: https://github.com/pepito987/ci-concourse.git
+    branch: dev
+- name: playbooks
+  type: git
+  source:
+    uri: https://github.com/pepito987/ansible.git
+
+jobs:
+- name: job-run-docker
+  public: true
+  serial: true
+  plan:
+  - get: ci-concourse
+  - get: playbooks
+  - task: run-docker
+    file: ci-concourse/ci-rehoming/tasks/task_dummy.yaml
