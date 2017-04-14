@@ -4,6 +4,7 @@ resources:
   type: git
   source:
     uri: https://github.com/pepito987/ci-concourse.git
+    branch: dev
 
 jobs:
 - name: job-welcome
