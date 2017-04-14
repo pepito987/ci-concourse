@@ -7,6 +7,8 @@ image_resource:
 
 inputs:
 - name: ci-concourse
+- name: playbooks
+  path: playbooks
 
 run:
   path: ./ci-concourse/ci-rehoming/scripts/say_something.sh
