@@ -5,10 +5,11 @@ resources:
   source:
     uri: https://github.com/pepito987/ci-concourse.git
     branch: dev
-- name: playbooks
+- name: ansible
   type: git
   source:
     uri: https://github.com/pepito987/ansible.git
+    branch: master
 
 jobs:
 - name: job-run-docker
@@ -16,6 +17,8 @@ jobs:
   serial: true
   plan:
   - get: ci-concourse
-  - get: playbooks
+  - { get: playbooks, resource: ansible }
   - task: run-docker
     file: ci-concourse/ci-rehoming/tasks/task_dummy.yaml
+  - task: say-hello
+    file: ci-concourse/ci-rehoming/tasks/task_hello.yaml
