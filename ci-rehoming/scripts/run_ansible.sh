@@ -6,8 +6,8 @@ echo "#####################"
 cd playbooks
 ansible-playbook playbooks/hello_world.yaml
 
-touch test.txt
 cd ..
+touch out/test.txt
 ls -R
 echo "#####################"
 

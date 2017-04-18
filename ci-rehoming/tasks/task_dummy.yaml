@@ -10,5 +10,8 @@ inputs:
 - name: playbooks
   path: playbooks
 
+outputs:
+- name: out
+
 run:
   path: ./ci-concourse/ci-rehoming/scripts/run_ansible.sh
