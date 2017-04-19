@@ -7,6 +7,7 @@ image_resource:
 
 inputs:
 - name: ci-concourse
+- name: ansible
 
 run:
-  path: ./ci-concourse/ci-rehoming/scripts/run_test.sh
+  path: ./ci-concourse/ci-rehoming/scripts/run_ansible_green.sh

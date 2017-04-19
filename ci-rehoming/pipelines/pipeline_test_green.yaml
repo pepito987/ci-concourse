@@ -1,6 +1,6 @@
 ---
 jobs:
-- name: job-tests
+- name: job-test-green
   public: true
   serial: true
   plan:
@@ -8,8 +8,8 @@ jobs:
   - get: ansible
   - get: my-timer
     trigger: true
-  - task: run_test
-    file: ci-concourse/ci-rehoming/tasks/task_run_test.yaml
+  - task: run_green_test
+    file: ci-concourse/ci-rehoming/tasks/task_run_green_test.yaml
 
 resources:
 - name: ci-concourse

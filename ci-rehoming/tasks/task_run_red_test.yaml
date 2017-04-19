@@ -7,11 +7,7 @@ image_resource:
 
 inputs:
 - name: ci-concourse
-- name: playbooks
-  path: playbooks
-
-outputs:
-- name: out
+- name: ansible
 
 run:
-  path: ./ci-concourse/ci-rehoming/scripts/run_ansible.sh
+  path: ./ci-concourse/ci-rehoming/scripts/run_ansible_red_test.sh
