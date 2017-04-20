@@ -13,4 +13,4 @@ outputs:
 - name: context
 
 run:
-  path: ./ci-concourse/ci-rehoming/scripts/prepare_docker.sh
+  path: ./ci-concourse/ci-rehoming/scripts/run_prepare_docker.sh
