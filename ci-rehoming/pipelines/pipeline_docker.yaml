@@ -1,0 +1,31 @@
+---
+jobs:
+- name: build-docker
+  trigger: true
+  plan:
+  - get: ci-concourse
+  - get: ansible
+  - task: run_green_test
+      file: ci-concourse/ci-rehoming/tasks/task_build_docker.yaml
+  - put: image
+    params:
+      build: context
+
+resources:
+- name: ci-concourse
+  type: git
+  source:
+    uri: https://github.com/pepito987/ci-concourse.git
+    branch: dev
+- name: ansible
+  type: git
+  source:
+    uri: https://github.com/pepito987/ansible.git
+    branch: master
+- name: image
+  type: docker-image
+  source:
+    email: {{docker-hub-email}}
+    username: peppequa
+    password: {{docker-hub-password}}
+    repository: peppequa/dummy

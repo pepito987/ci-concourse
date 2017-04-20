@@ -1,0 +1,14 @@
+---
+platform: linux
+
+image: docker:///busybox
+
+inputs:
+- name: ci-concourse
+- name: ansible
+
+outputs:
+- name: context
+
+run:
+  path: ./ci-concourse/ci-rehoming/scripts/prepare_docker.sh
