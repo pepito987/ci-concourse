@@ -23,9 +23,23 @@ jobs:
     - get: ci-concourse
       trigger: true
     - get: ansible
+      passed: [job-destroy-test]
       trigger: true
   - task: run-green-destroy
     file: ci-concourse/ci-rehoming/tasks/run_destroy_green.yaml
+
+- name: job-provision-test
+  public: true
+  serial: true
+  plan:
+  - aggregate:
+    - get: version
+      passed: [job-deploy-green]
+      trigger: true
+    - get: ci-concourse
+    - get: ansible
+  - task: run_green_test
+    file: ci-concourse/ci-rehoming/tasks/task_run_green_test.yaml
 
 resources:
 - name: ci-concourse
