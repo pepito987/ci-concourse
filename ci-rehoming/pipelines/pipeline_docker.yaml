@@ -1,4 +1,22 @@
 ---
+
+groups:
+- name: ALL
+  jobs:
+  - build-docker
+  - job-destroy-test
+  - job-deploy-green
+  - job-provision-test
+
+- name: Build&Test
+  jobs:
+  - build-docker
+  - job-destroy-test
+- name: Deploy&Test
+  jobs:
+  - job-deploy-green
+  - job-provision-test
+
 jobs:
 - name: build-docker
   public: true
@@ -14,8 +32,6 @@ jobs:
 - name: job-destroy-test
   public: true
   plan:
-#  - get: my-timer
-#    trigger: true
   - get: image
     passed: [build-docker]
     trigger: true
