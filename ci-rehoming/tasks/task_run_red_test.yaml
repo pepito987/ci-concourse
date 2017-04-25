@@ -9,5 +9,8 @@ inputs:
 - name: ci-concourse
 - name: ansible
 
+outputs:
+- name: out
+
 run:
   path: ./ci-concourse/ci-rehoming/scripts/run_ansible_red_test.sh
