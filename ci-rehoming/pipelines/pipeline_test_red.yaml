@@ -1,0 +1,48 @@
+---
+jobs:
+- name: job-test-red
+  public: true
+  serial: true
+  plan:
+  - get: ci-concourse
+  - get: ansible
+  - get: my-timer
+    trigger: true
+  - task: run_red_test
+    file: ci-concourse/ci-rehoming/tasks/task_run_red_test.yaml
+    on_failure:
+      put: slack-alert
+      params:
+        text_file: out/message.txt
+        username: "Battercup"
+        icon_emoji: ":swear:"
+
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+
+resources:
+- name: ci-concourse
+  type: git
+  source:
+    uri: https://github.com/pepito987/ci-concourse.git
+    branch: dev
+
+- name: ansible
+  type: git
+  source:
+    uri: https://github.com/pepito987/ansible.git
+    branch: master
+
+- name: slack-alert
+  type: slack-notification
+  source:
+    url: https://hooks.slack.com/services/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
+
+- name: my-timer
+  type: time
+  source:
+    interval: 1m

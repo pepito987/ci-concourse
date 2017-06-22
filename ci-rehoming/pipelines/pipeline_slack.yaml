@@ -1,0 +1,21 @@
+---
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+
+resources:
+- name: slack-alert
+  type: slack-notification
+  source:
+    url: https://hooks.slack.com/services/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
+
+jobs:
+- name: job-welcome
+  public: true
+  plan:
+  - put: slack-alert
+    params:
+      text: "Hello World :surfieapproved:"

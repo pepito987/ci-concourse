@@ -1,0 +1,69 @@
+---
+jobs:
+- name: job-destroy-test
+  public: true
+  plan:
+  - get: my-timer
+    trigger: true
+  - get: ci-concourse
+  - get: ansible
+  - task: run_green_test
+    file: ci-concourse/ci-rehoming/tasks/task_run_green_test.yaml
+  - put: version
+    params: {bump: minor}
+
+- name: job-deploy-green
+  public: true
+  serial: true
+  plan:
+  - aggregate:
+    - get: version
+      passed: [job-destroy-test]
+      trigger: true
+    - get: ci-concourse
+      trigger: true
+    - get: ansible
+      passed: [job-destroy-test]
+      trigger: true
+  - task: run-green-destroy
+    file: ci-concourse/ci-rehoming/tasks/run_destroy_green.yaml
+
+- name: job-provision-test
+  public: true
+  serial: true
+  plan:
+  - aggregate:
+    - get: version
+      passed: [job-deploy-green]
+      trigger: true
+    - get: ci-concourse
+    - get: ansible
+  - task: run_green_test
+    file: ci-concourse/ci-rehoming/tasks/task_run_green_test.yaml
+
+resources:
+- name: ci-concourse
+  type: git
+  source:
+    uri: https://github.com/pepito987/ci-concourse.git
+    branch: dev
+
+- name: ansible
+  type: git
+  source:
+    uri: https://github.com/pepito987/ansible.git
+    branch: master
+
+- name: my-timer
+  type: time
+  source:
+    interval: 1m
+
+- name: version
+  type: semver
+  source:
+    driver: git
+    uri: git@github.com:pepito987/ansible.git
+    branch: version
+    file: vtype
+    private_key: {{ansible-private-key}}

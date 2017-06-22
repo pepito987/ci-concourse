@@ -1,0 +1,17 @@
+version: "2.0"
+
+services:
+  with:
+    container_name: external-docker
+    build: .
+    image: external-docker-ansible-runner
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ${HOME}/.aws:/root/.aws
+    environment:
+      - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+      - AWS_SECURITY_TOKEN=${AWS_SECURITY_TOKEN}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+    tty: true
+    command: "echo 'Run with: make <provision|test|destroy>'"

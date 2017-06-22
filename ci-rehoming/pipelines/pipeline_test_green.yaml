@@ -1,0 +1,29 @@
+---
+jobs:
+- name: job-test-green
+  public: true
+  serial: true
+  plan:
+  - get: ci-concourse
+  - get: ansible
+  - get: my-timer
+    trigger: true
+  - task: run_green_test
+    file: ci-concourse/ci-rehoming/tasks/task_run_green_test.yaml
+
+resources:
+- name: ci-concourse
+  type: git
+  source:
+    uri: https://github.com/pepito987/ci-concourse.git
+    branch: dev
+- name: ansible
+  type: git
+  source:
+    uri: https://github.com/pepito987/ansible.git
+    branch: master
+
+- name: my-timer
+  type: time
+  source:
+    interval: 1m
